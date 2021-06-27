@@ -496,6 +496,7 @@ func findParentSnapshot(ctx context.Context, repo restic.Repository, opts Backup
 }
 
 func runBackup(opts BackupOptions, gopts GlobalOptions, term *termstatus.Terminal, args []string) error {
+	// Zuoru: the main enter point of a backup operation
 	err := opts.Check(gopts, args)
 	if err != nil {
 		return err

@@ -497,26 +497,34 @@ func findParentSnapshot(ctx context.Context, repo restic.Repository, opts Backup
 
 func runBackup(opts BackupOptions, gopts GlobalOptions, term *termstatus.Terminal, args []string) error {
 	// Zuoru: the main enter point of a backup operation
+	// ZR: check the input parameters
 	err := opts.Check(gopts, args)
 	if err != nil {
 		return err
 	}
+	// 
 
+	// ZR: identify the target (the input folder)
 	targets, err := collectTargets(opts, args)
+	// e.g., target: [/home/zryang/test-backup-source/]
 	if err != nil {
 		return err
 	}
 
+	// ZR: get the current time stamp
 	timeStamp := time.Now()
+	// e.g., timeStamp: 2021-06-29 23:28:43.849548967 +0800 CST m=+0.010586127
 	if opts.TimeStamp != "" {
 		timeStamp, err = time.ParseInLocation(TimeFormat, opts.TimeStamp, time.Local)
 		if err != nil {
 			return errors.Fatalf("error in time option: %v\n", err)
 		}
+		fmt.Println("Zuoru: test")
 	}
 
 	var t tomb.Tomb
 
+	// ZR: set the verbosity
 	if gopts.verbosity >= 2 && !gopts.JSON {
 		Verbosef("open repository\n")
 	}

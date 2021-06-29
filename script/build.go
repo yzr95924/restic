@@ -154,7 +154,7 @@ func build(cwd string, env map[string]string, args ...string) error {
 	cmd.Dir = cwd
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-
+	verbosePrintf("cmd %q\n", cmd)
 	verbosePrintf("chdir %q\n", cwd)
 	verbosePrintf("go %q\n", a)
 

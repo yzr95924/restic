@@ -3,7 +3,7 @@
 all: restic
 
 restic:
-	go run build.go
+	go run ./script/build.go --verbose
 
 clean:
 	rm -f restic

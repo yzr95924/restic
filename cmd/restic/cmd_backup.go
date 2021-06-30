@@ -519,9 +519,9 @@ func runBackup(opts BackupOptions, gopts GlobalOptions, term *termstatus.Termina
 		if err != nil {
 			return errors.Fatalf("error in time option: %v\n", err)
 		}
-		fmt.Println("Zuoru: test")
 	}
 
+	// ZR: the variable to track the goroutine status
 	var t tomb.Tomb
 
 	// ZR: set the verbosity
@@ -529,6 +529,7 @@ func runBackup(opts BackupOptions, gopts GlobalOptions, term *termstatus.Termina
 		Verbosef("open repository\n")
 	}
 
+	// ZR: open the repository
 	repo, err := OpenRepository(gopts)
 	if err != nil {
 		return err

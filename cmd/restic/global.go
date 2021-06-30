@@ -392,11 +392,13 @@ func ReadPasswordTwice(gopts GlobalOptions, prompt1, prompt2 string) (string, er
 }
 
 func ReadRepo(opts GlobalOptions) (string, error) {
+	// Zuoru_read_repo: check the repo location
 	if opts.Repo == "" && opts.RepositoryFile == "" {
 		return "", errors.Fatal("Please specify repository location (-r or --repository-file)")
 	}
 
 	repo := opts.Repo
+	// e.g., "home/zryang/test-restic-repo/
 	if opts.RepositoryFile != "" {
 		if repo != "" {
 			return "", errors.Fatal("Options -r and --repository-file are mutually exclusive, please specify only one")
@@ -413,6 +415,7 @@ func ReadRepo(opts GlobalOptions) (string, error) {
 		repo = strings.TrimSpace(string(s))
 	}
 
+	// return the repo name
 	return repo, nil
 }
 
@@ -420,11 +423,15 @@ const maxKeys = 20
 
 // OpenRepository reads the password and opens the repository.
 func OpenRepository(opts GlobalOptions) (*repository.Repository, error) {
+	// Zuoru_open_repo: open the repo
+	// ZR: read the name of the repo 
 	repo, err := ReadRepo(opts)
+	// ZR: repo name, e.g., "/home/zryang/test-restic-repo/"
 	if err != nil {
 		return nil, err
 	}
 
+	// ZR: open the repo and its corresponding backend
 	be, err := open(repo, opts, opts.extended)
 	if err != nil {
 		return nil, err
